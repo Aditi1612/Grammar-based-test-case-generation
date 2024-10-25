@@ -1,12 +1,11 @@
+"""Element effectiveness"""
+
 import argparse
 from pathlib import Path
-from typing import Iterable, Any, Optional
 
-import jsonlines  # type: ignore
+import jsonlines
 import numpy as np
 from utils import sanitize  # type: ignore
-from utils import ExecutionSummary
-from utils import GenerationResult
 from utils import split_with_level
 
 

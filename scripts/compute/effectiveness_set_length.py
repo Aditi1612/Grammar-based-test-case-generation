@@ -7,7 +7,10 @@ from utils import sanitize  # type: ignore
 
 
 def main(
-    execution_summary_path: Path, generation_path: Path, degree: int
+    execution_summary_path: Path,
+    generation_path: Path,
+    degree: int,
+    accumulative: bool,
 ) -> None:
 
     summaries = jsonlines.open(execution_summary_path)
@@ -40,12 +43,18 @@ def main(
         total_incorrect_results = [True] * len(
             testcase_summaries[0]["incorrect_results"]
         )
+
+        # Remove edge case generation
         if len(testcase_summaries) == 31:
-            testcase_summaries = testcase_summaries[1 : (degree + 1) * 10 + 1]
-        elif len(testcase_summaries) == 30:
-            testcase_summaries = testcase_summaries[0 : (degree + 1) * 10]
-        else:
-            assert False
+            testcase_summaries.pop(1)
+
+        assert len(testcase_summaries) == 30
+
+        start = 0
+        if not accumulative:
+            start = degree * 10
+        end = (degree + 1) * 10
+        testcase_summaries = testcase_summaries[start:end]
 
         for testcase_summary in testcase_summaries:
             incorrect_results = testcase_summary["incorrect_results"]
@@ -71,6 +80,12 @@ if __name__ == "__main__":
     parser.add_argument("--execution-summary", type=Path)
     parser.add_argument("--generation-result", type=Path)
     parser.add_argument("--degree", type=int)
+    parser.add_argument("--accumulative", action="store_true")
 
     args = parser.parse_args()
-    main(args.execution_summary, args.generation_result, args.degree)
+    main(
+        args.execution_summary,
+        args.generation_result,
+        args.degree,
+        args.accumulative,
+    )

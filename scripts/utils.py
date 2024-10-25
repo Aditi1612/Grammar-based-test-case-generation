@@ -5,16 +5,20 @@ import os
 import warnings
 
 warnings.filterwarnings("ignore", module="urllib3")
+# pylint: disable=wrong-import-position
 import random
 from pathlib import Path
-from typing import Iterable, Optional, TypedDict, TypeVar, Any
+from typing import Any, Iterable, Optional, TypedDict, TypeVar
 
 import jsonlines
 from transformers import RobertaTokenizer  # type: ignore
 
 from data_loader import MyDataset  # type: ignore
-from tokenizer import CountingContextFreeGrammarTokenizer as CcfgTokenizer  # type: ignore
+from tokenizer import (  # type: ignore
+    CountingContextFreeGrammarTokenizer as CcfgTokenizer,
+)
 
+# pylint: enable=wrong-import-position
 
 _target_tokenizer = None
 
@@ -26,9 +30,9 @@ def _initialize_target_tokenizer() -> None:
     global _target_tokenizer
     if _target_tokenizer is not None:
         return
-    _model_name = "Salesforce/codet5-base"
-    _source_tokenizer = RobertaTokenizer.from_pretrained(_model_name)
-    _target_tokenizer = CcfgTokenizer(_source_tokenizer)
+    model_name = "Salesforce/codet5-base"
+    source_tokenizer = RobertaTokenizer.from_pretrained(model_name)
+    _target_tokenizer = CcfgTokenizer(source_tokenizer)
 
 
 def stringified_to_grammar(
@@ -84,7 +88,7 @@ def get_mode(xs: list[str]) -> tuple[str, int]:
     return mode, num_of_mode
 
 
-def sanitize(xs: Iterable[T], filename: str = "test") -> Iterable[T]:
+def sanitize(xs: Iterable[T]) -> Iterable[T]:
     ground_truth_generation_results = jsonlines.open(
         Path(os.environ["GROUND_TRUTH_GENERATION_RESULT"]), "r"
     )
@@ -202,7 +206,7 @@ def get_testcase_num_dict(filename: str) -> dict[str, int]:
     return testcase_num_dict
 
 
-def split_with_level(xs: Iterable[T], filename: str) -> dict[int, list[T]]:
+def split_with_level(xs: Iterable[T], filename: str) -> dict[str, list[T]]:
     levels: Iterable[dict[str, Any]] = jsonlines.open(
         Path(os.environ["LEVEL_DIR"]) / f"{filename}.jsonl"
     )
@@ -210,10 +214,16 @@ def split_with_level(xs: Iterable[T], filename: str) -> dict[int, list[T]]:
     xs = list(xs)
     assert len(levels) == len(xs)
 
-    level_to_xs: dict[int, list[T]] = {level: [] for level in range(1, 6)}
+    level_to_xs: dict[str, list[T]] = {"easy": [], "normal": [], "hard": []}
     for x, level_data in zip(xs, levels):
         level = level_data["max_level"]
-        level_to_xs[level].append(x)
+        if level == 1:
+            label = "easy"
+        elif level == 2:
+            label = "normal"
+        else:
+            label = "hard"
+        level_to_xs[label].append(x)
 
     return level_to_xs
 
@@ -277,7 +287,8 @@ class ExecutionResult(TypedDict):
 class ExecutionSummaryPerTestcase(TypedDict):
     """ExecutionSummaryPerTestcase is a dictionary that contains the results of
     execution for a single testcase. It is used for summarizing the results of
-    execution. If there is no correct_solution generating output, answer is None.
+    execution. If there is no correct_solution generating output, answer is
+    None.
     """
 
     answer: Optional[str]

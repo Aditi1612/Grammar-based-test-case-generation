@@ -1,21 +1,18 @@
-import argparse
-from pathlib import Path
-from typing import Iterable, Any, Optional
+"""Set-based effectiveness"""
 
-import jsonlines  # type: ignore
+import argparse
+import os
+from pathlib import Path
+
+import jsonlines
 import numpy as np
 from utils import sanitize  # type: ignore
-from utils import ExecutionSummary
-from utils import GenerationResult
 from utils import split_with_level
 
 
-def main(
-    summary_path: Path,
-    generation_path: Path,
-    use_level: bool,
-) -> None:
+def main(summary_path: Path, generation_path: Path, use_level: bool) -> None:
     assert summary_path.stem == generation_path.stem
+    use_grammar = "grammar" in os.path.relpath(summary_path)
 
     summary_dataset = jsonlines.open(summary_path)
     generation_dataset = jsonlines.open(generation_path)
@@ -47,25 +44,21 @@ def main(
             summary_results[0]["incorrect_results"]
         )
 
-        # Select at most 10 test cases
-        if len(summary_results) == 31:
-            summary_results = (
-                summary_results[0:1]
-                + summary_results[1:4]
-                + summary_results[11:14]
-                + summary_results[21:24]
-            )
-        elif len(summary_results) == 30:
-            summary_results = (
-                summary_results[0:4]
-                + summary_results[10:13]
-                + summary_results[20:23]
-            )
-        else:
-            m = min(10, len(summary_results))
-            summary_results = summary_results[:m]
+        if use_grammar:
+            # Remove one short test case
+            if len(summary_results) == 31:
+                summary_results.pop(1)
 
-        assert len(summary_results) <= 10, len(summary_results)
+            # Select at most 10 test cases
+            if len(summary_results) == 30:
+                summary_results = (
+                    summary_results[0:4]
+                    + summary_results[10:13]
+                    + summary_results[20:23]
+                )
+            else:
+                m = min(10, len(summary_results))
+                summary_results = summary_results[:m]
 
         for testcase_summary in summary_results:
             incorrect_results = testcase_summary["incorrect_results"]

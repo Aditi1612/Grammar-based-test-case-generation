@@ -1,12 +1,11 @@
 import argparse
 from pathlib import Path
-from typing import Iterable, Optional
 from statistics import mean
+from typing import Iterable, Optional
 
 import jsonlines  # type: ignore
 from utils import sanitize  # type: ignore
-from utils import GenerationResult
-from utils import split_with_level
+from utils import GenerationResult, split_with_level
 
 
 def main(generation_path: Path, use_level: bool) -> None:
@@ -48,8 +47,7 @@ def main(generation_path: Path, use_level: bool) -> None:
             well_definednesses, level_name
         )
         level_to_validities = split_with_level(validities, "test")
-        for level in range(1, 6):
-            well_definednesses = level_to_well_definednesses[level]
+        for level, well_definednesses in level_to_well_definednesses.items():
             validities = level_to_validities[level]
             assert len(validities) == len(well_definednesses)
 
