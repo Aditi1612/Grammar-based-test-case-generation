@@ -1,8 +1,10 @@
+"""Set-based effectiveness respect to the length of test cases."""
+
 import argparse
 from pathlib import Path
 
 import jsonlines  # type: ignore
-import numpy as np
+import numpy as np  # type: ignore
 from utils import sanitize  # type: ignore
 
 
@@ -44,7 +46,7 @@ def main(
             testcase_summaries[0]["incorrect_results"]
         )
 
-        # Remove edge case generation
+        # Remove a short test case
         if len(testcase_summaries) == 31:
             testcase_summaries.pop(1)
 
