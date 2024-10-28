@@ -45,9 +45,9 @@ optional arguments:
 ### Reproducing the evaluation results
 
 Place solution files in `data/solutions/{solutions,incorrect_solutions}/`.
-Then, `make all` will reproduce the following evaluation results.
+Then, `make all` command will reproduce the following evaluation results.
 
-```
+```bash
  data
  ├── execution-summary
  │   ├── code-contest/{generated,private,public}/test.jsonl
@@ -76,7 +76,7 @@ Then, `make all` will reproduce the following evaluation results.
 
 To see the analysis, run the following commands.
 
-```
+```bash
 bash scripts/print/{validity,effectiveness}.sh
 bash scripts/print/{validity,effectiveness}_level.sh
 bash scripts/print/effectiveness_length{,_acc,_comb}.sh
