@@ -45,10 +45,43 @@ optional arguments:
 ### Reproducing the evaluation results
 
 Place solution files in `data/solutions/{solutions,incorrect_solutions}/`.
+Then, `make all` will reproduce the following evaluation results.
 
-```bash
-$ make all
-$ bash scripts/print/*.sh
+```
+ data
+ ├── execution-summary
+ │   ├── code-contest/{generated,private,public}/test.jsonl
+ │   ├── direct/{gemini,gpt}/test.jsonl
+ │   ├── fuzzing/{private,public}/test.jsonl
+ │   └── grammar
+ │       ├── ccfg-t5/{beam-1,beam-10}/test.jsonl
+ │       ├── gemini/{1-shot,5-shot}/test.jsonl
+ │       ├── gpt/{1-shot,5-shot}/test.jsonl
+ │       └── ground-truth/test.jsonl
+ ├── generation-result
+ │   ├── code-contest/{generated,private,public}/test.jsonl
+ │   ├── direct/{gemini,gpt}/test.jsonl
+ │   ├── fuzzing/{private,public}/test.jsonl
+ │   └── grammar
+ │       ├── ccfg-t5/{beam-1,beam-10}/test.jsonl
+ │       ├── gemini/{1-shot,5-shot}/test.jsonl
+ │       ├── gpt/{1-shot,5-shot}/test.jsonl
+ │       └── ground-truth/test.jsonl
+ └── parsing-result
+        ├── ccfg-t5/{beam-1,beam-10}/test.jsonl
+        ├── gemini/{1-shot,5-shot}/test.jsonl
+        ├── gpt/{1-shot,5-shot}/test.jsonl
+        └── ground-truth/test.jsonl
+```
+
+To see the analysis, run the following commands.
+
+```
+bash scripts/print/{validity,effectiveness}.sh
+bash scripts/print/{validity,effectiveness}_level.sh
+bash scripts/print/effectiveness_length{,_acc,_comb}.sh
+bash scripts/print/{exact_match,bleu_score}.sh
+bash scripts/print/generality.sh
 ```
 
 ## Citation
