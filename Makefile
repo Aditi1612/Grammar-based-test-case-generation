@@ -12,7 +12,7 @@ data/%.jsonl: raw-data/%.jsonl
 	mkdir -p $(dir $@)
 	ln -fs $(abspath $<) $@
 
-prepare-dataset:  ## Create ${SOLUTIONS_DIR}
+prepare-dataset:
 	python scripts/download_dataset.py \
 	&& python scripts/filter_python_dataset.py \
 	&& python scripts/generate_python3_solutions.py \
@@ -26,8 +26,7 @@ SUFFIXES_GRAMMAR = \
 	gemini/5-shot/test.jsonl \
 	gpt/1-shot/test.jsonl \
 	gpt/5-shot/test.jsonl \
-	ground-truth/test.jsonl # \
-	# ground-truth/train.jsonl
+	ground-truth/test.jsonl
 GRAMMAR = $(SUFFIXES_GRAMMAR:%=$(DATA)/grammar/%)
 include makefiles/grammar.mk
 
@@ -40,9 +39,7 @@ SUFFIXES_TESTCASE = \
 	direct/gemini/test.jsonl \
 	direct/gpt/test.jsonl \
 	fuzzing/private/test.jsonl \
-	fuzzing/public/test.jsonl # \
-	# fuzzing/private/train.jsonl \
-	# fuzzing/public/train.jsonl
+	fuzzing/public/test.jsonl
 TESTCASE = $(SUFFIXES_TESTCASE:%=$(DATA)/testcase/%)
 include makefiles/testcase.mk
 
@@ -58,11 +55,7 @@ include makefiles/execution_result.mk
 SUMMARY_RESULT = $(SUFFIXES_TESTCASE:%=$(DATA)/execution-summary/%)
 include makefiles/summary_result.mk
 
-COVERAGE_RESULT = $(SUFFIXES_TESTCASE:%=$(DATA)/coverage/%)
-include makefiles/coverage_result.mk
-
 all: \
 	$(GENERATION_RESULT) \
 	$(PARSING_RESULT) \
 	$(SUMMARY_RESULT)
-	# $(COVERAGE_RESULT)
