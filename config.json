@@ -2,7 +2,7 @@
   "pretrained": "Salesforce/codet5-base",
   "data_dir": "data/",
   "solution_prefix": "data/solutions/solutions",
-  "incorrect_solution_prefix": "data/solutions/incorrect_solutions",
+  "incorrect_solution_prefix": "data/solutions/solutions",
   "train_data": "labeled/train.jsonl",
   "test_data": "labeled/test.jsonl",
   "unlabeled_train_data": "unlabeled/code_contests_train_python_filtered.jsonl",
@@ -17,20 +17,16 @@
   },
   "optimizer": {
     "type": "Adam",
-    "args":{
+    "args": {
       "lr": 1e-5
     }
   },
-  "metrics": [],
   "trainer": {
-    "epochs": 1000,
-    "save_dir": "saved/0927.wPL/",
+    "epochs": 100,
+    "save_dir": "saved/without_pl/",
     "save_period": 10,
     "valid_period": 5,
-    "pseudo_label_period": 10,
-    "pseudo_label_samples": 200,
-    "max_pseudo_labeled_samples": 500,
-    "early_stopping_patience": 3
+    "pseudo_label_period": -1
   },
   "train": {
     "generation_config": {
@@ -50,11 +46,7 @@
     }
   },
   "validate_testcases": {
-    "args": {
-      "num_correct_solution_samples": 20,
-      "num_incorrect_solution_samples": 20,
-      "validity_threshold": 0.9
-    }
+    "args": {}
   },
   "validate_labeling": {
     "get_soundness": {
@@ -73,7 +65,7 @@
     "generation_config": {
       "length_penalty": 1.0,
       "max_new_tokens": 150,
-      "num_beams": 10,
+      "num_beams": 1,
       "repetition_penalty": 2.5,
       "early_stopping": true,
       "num_return_sequences": 10
