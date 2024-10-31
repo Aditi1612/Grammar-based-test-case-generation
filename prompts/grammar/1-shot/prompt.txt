@@ -1,0 +1,31 @@
+You are the best programmar in the world.
+You will be asked to determine the grammar and the constraint of the given specification by following the general rules and the structure of the given five examples.
+I will first give you the general rules and the examples of how the grammars and the constraints are constructed from the specifications along with the reasons.
+After analyzing the general rules, examples and learning how to generate the grammar and the constraint from the specification,
+I will ask you to generate the grammar and the constraint for the last specification by following the rules and the examples.
+General rules for making a grammar:
+1) <S> -> Start non-terminal: Represents the starting point of the grammar.
+2) [variable] -> counter variable: Enclose variable names in brackets to indicate they are counters variables and includes corresponding counter non-terminals like <T_variable>.
+3) <s>, <n> -> space and enter token: Use <s> and <n> to denote space and newline characters respectively.
+4) <T_i> -> counter non-terminal: Represents a non-terminal that controls a sequence repeated according to a counter variable that is enclosed in [].
+5) Use regex expressions (e.g., [a-zA-Z]{1,100}) to define ranges for characters. These can include symbols, numbers, or letters, specifying minimum and maximum lengths in {}. Use regex excpressions only when needed only.
+6) If the regex exressions is a sequence of only one character, use {1} to specify its length.
+7) If there are multiple counter variables, use <L_i> for the second one and <Z_i> for the third one. 
+8) When two variables on the same line act as counter variables, represent each with a respective non-terminal, such as <T_variable> and <L_variable> followed by <T_i> amd <L_i>.
+9) For additional counters beyond three, any single alphabet can be used.
+10) Each counter non-terminal should decrement until it reaches 1, e.g., <T_1>.
+11) Enclose counter non-terminals in [] only if they are associated with a counter variable.
+12) Include all variables mentioned in constraints within the grammar structure.
+13) Strictly utilize identifiers such as <L_i>, <T_i>, etc., consistently across the grammar and nothing else.
+14) Ensure all counter non-terminals are correctly and consistently represented without omissions.
+15) If there are two counter non terminal in the same line then use <T_variable> and <L_varibale> where the variable could be anything enclosed in '[]'. String do not use <T_variable> and <L_variable>.
+16) If the variable is replaced by the regex replace it at the moment only when the regex expressions are required, do not create a counter non-terminal.
+Strictly follow the rules and enclose only those variables in [] that will serve as a counter non-terminal, other variables should not be enclosed in [].
+<Specification> "Constraints\n\n* 1 \\leq N \\leq 100\n* 1 \\leq A_i \\leq 1000\n\nInput\n\nInput is given from Standard Input in the following format:\n\n\nN\nA_1 A_2 \\ldots A_N" </Specification>
+<Reason> "The grammar begins with the start symbol <S>. Here, 'N' is used as a counter variable for the array elements, thus it is denoted as [N] in the grammar to reflect its role as a counter. If 'N' were not a counter, it would be represented simply as 'N'. All variables that serve as counters are similarly denoted with brackets. Consequently, the grammar is initiated with '<S>->[N] <n> <T_N>'. The non-terminal <T_i> is a counter-driven rule for [N], where 'A_i' represents each array element separated by a space symbol <s>. The grammar constructs are laid out as '<S>->[N] <n> <T_N>', '<T_i>-><T_i-1> <s> A_i', and '<T_1>->A_1' to systematically parse the sequence of array elements following the count [N]." </Reason>
+<Grammar> "<S>->[N] <n> <T_N>", "<T_i>-><T_i-1> <s> A_i", "<T_1>->A_1" </Grammar>
+<Constraint> "1<=n<=100", "1<=A_i<=1000" </Constraint>
+<Specification> "{Specification}" </Specification>
+Generate the <Grammar> and <Constraint> for the given last <Specification> by strictly following the general rules and the examples provided without changing its basic structure from the examples in a json format.
+Json format should be
+{"grammar": {"productions": [grammar for the Specification], "constraints": [constraint for the Specification]}}.
