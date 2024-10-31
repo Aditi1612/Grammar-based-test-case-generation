@@ -1,0 +1,50 @@
+You are the best programmar in the world.
+You will be asked to determine the grammar and constraint of the given specification is following the general rules and the structure of the given five examples. Correct the given grammar with the general rules.
+I will first give you the general rules and the examples of how the grammars and the constraints are constructed from the specifications along with the reasons and the generated grammar and the constraint with the specification.
+After analyzing the general rules, examples and learning how to generate the grammar and the constraint from the specification,
+I will ask you to generate the grammar and constraint for the given specification is valid and follows the general rules and examples provided. If not, then generate the new correct grammar and the constraint following the rules and examples otherwise print the given grammar and constraint.
+General rules for generating the grammar:
+1) <S> -> Start non-terminal: Represents the starting point of the grammar.
+2) [variable] -> counter variable: Enclose variable names in brackets to indicate they are counters variables and includes corresponding counter non-terminals like <T_variable>.
+3) <s>, <n> -> space and enter token: Use <s> and <n> to denote space and newline characters respectively.
+4) <T_i> -> counter non-terminal: Represents a non-terminal that controls a sequence repeated according to a counter variable that is enclosed in [].
+5) Use regex expressions (e.g., [a-zA-Z]{1,100}) to define ranges for characters. These can include symbols, numbers, or letters, specifying minimum and maximum lengths in {}. Use regex excpressions only when needed only.
+6) If the regex exressions is a sequence of only one character, use {1} to specify its length.
+7) If there are multiple counter variables, use <L_i> for the second one and <Z_i> for the third one. 
+8) When two variables on the same line act as counter variables, represent each with a respective non-terminal, such as <T_variable> and <L_variable> followed by <T_i> amd <L_i>.
+9) For additional counters beyond three, any single alphabet can be used.
+10) Each counter non-terminal should decrement until it reaches 1, e.g., <T_1>.
+11) Enclose counter variables in []] only if they are associated with a counter non-terminal.
+12) Include all variables mentioned in constraints within the grammar structure.
+13) Strictly utilize identifiers such as <L_i>, <T_i>, etc., consistently across the grammar and nothing else.
+14) Ensure all counter non-terminals are correctly and consistently represented without omissions.
+15) If there are two counter non terminal in the same line then use <T_variable> and <L_varibale> where the variable could be anything enclosed in '[]'. 
+16) If the variable is replaced by the regex replace it at the moment only when the regex expressions are required, do not create a counter non-terminal for that variable.
+17) Note that the regex expressions replaces the variables only when the regex expressions are required.
+Strictly follow the rules and enclose only those variables in '[]' that will serve as a counter non-terminal, otherwise do not enclose variables in '[]' that does not serves as a counter variable. 
+Use the regex expressions like  the following where the variable itself is replaced by the regex expressions
+The following are the examples for the generation of the grammar and constraint along with their reasons:
+<Specification> Constraints\n\n* -1000 ≤ a, b ≤ 1000\n\nInput\n\nTwo integers a and b separated by a single space are given in a line. </Specification>
+<Reason> "The grammar construction begins with the initial non-terminal <S>. It defines two variables, 'a' and 'b', which are separated by a space symbol denoted as <s>. The structure of the grammar is formulated as '<S>->a <s> b', representing the input format where 'a' and 'b' are two integers separated by a space." </Reason>
+<Grammar>  "<S>->a <s> b". </Grammar>
+<Constraint>  "-1000<=a<=1000", "-1000<=b<=1000". " </Constraint>
+<Specification> "Constraints\n\n* 1 \\leq N \\leq 100\n* 1 \\leq A_i \\leq 1000\n\nInput\n\nInput is given from Standard Input in the following format:\n\n\nN\nA_1 A_2 \\ldots A_N" </Specification>
+<Reason> "The grammar begins with the start symbol <S>. Here, 'N' is used as a counter variable for the array elements, thus it is denoted as [N] in the grammar to reflect its role as a counter. If 'N' were not a counter, it would be represented simply as 'N'. All variables that serve as counters are similarly denoted with brackets. Consequently, the grammar is initiated with '<S>->[N] <n> <T_N>'. The non-terminal <T_i> is a counter-driven rule for [N], where 'A_i' represents each array element separated by a space symbol <s>. The grammar constructs are laid out as '<S>->[N] <n> <T_N>', '<T_i>-><T_i-1> <s> A_i', and '<T_1>->A_1' to systematically parse the sequence of array elements following the count [N]." </Reason>
+<Grammar> "<S>->[N] <n> <T_N>", "<T_i>-><T_i-1> <s> A_i", "<T_1>->A_1" </Grammar>
+<Constraint> "1<=n<=100", "1<=A_i<=1000" </Constraint>
+<Specification> "Ania has a large integer S. Its decimal representation has length n and doesn't contain any leading zeroes. Ania is allowed to change at most k digits of S. She wants to do it in such a way that S still won't contain any leading zeroes and it'll be minimal possible. What integer will Ania finish with?\n\nInput\n\nThe first line contains two integers n and k (1 \u2264 n \u2264 200 000, 0 \u2264 k \u2264 n) \u2014 the number of digits in the decimal representation of S and the maximum allowed number of changed digits.\n\nThe second line contains the integer S. It's guaranteed that S has exactly n digits and doesn't contain any leading zeroes." </Specification>
+<Reason> "The grammar begins with the starting non-terminal <S>. It inlcudes two variables n and k, but n  serves as the counter variable so we enclose in [n]. The grammar is initiated with <S>->[n] <s> k <n> <T_n>. Since it does not have any leading zeroes so, <T_i>->[1-9]{1} <B_i-1> is used reflect this and <B_i> is used to reflect all the other numbers including zero." </Reason>
+<Grammar> "<S>->[n] <s> k <n> <T_n>", "<T_i>->[1-9]{1} <B_i-1>", "<T_1>->[1-9]{1}", "<B_i>->[0-9]{1} <B_i-1>", "<B_1>->[0-9]{1}" </Grammar>
+<Constraint> "1<=n<=200000", "0<=k<=n" </Constraint>
+<Specification> "Input\n\nThe first line contains a single integer n (1 ≤ n ≤ 10^6) — the length of Dima's sequence.\n\nThe second line contains string of length n, consisting of characters \"(\" and \")\" only." </Specification>
+<Reason> "The grammar begins with the starting non-terminal <S>. It includes one variable, n, which is used both as a counter and to specify the length of a sequence. Consequently, the variable is represented as [n] to indicate its role as a length specifier for the sequence of characters, which consist only of '(' and ')'. This sequence is described using the regular expression [()]{n}, meaning a string of n characters, each of which is either '(' or ')'. Thus, the grammar is constructed to reflect this format: "<S>->[n] <n> [()]{n}"."</Reason>
+<Grammar> "<S>->[n] <n> [()]{n}  has the counter variable [n] that is why  we changed n to [n] for reflecting the counter variable because it is used  as the length in the regex expression" </Grammar>
+<Constraint> "1<=n<=10^6" </Constraint>
+<Specification> "Input\n\nThe first line of the input contains two integers n and m (1 ≤ n, m ≤ 100) — the number of floors in the house and the number of flats on each floor respectively.\n\nNext n lines describe the floors from top to bottom and contain 2·m characters each. If the i-th window of the given floor has lights on, then the i-th character of this line is '1', otherwise it is '0'." </Specification>
+<Reason> "The formation of the grammar starts with the start non-terminal <S>, there is two variables that is n and m and both of them serves as the counter variables, hence the variables are converted to [n] and [m]  which then makes <T_n> that is separated by the new line <n>.  If variable n and m was not the counter variable we will write as n and m only not [n] and [m]. We convert all the variables that serves as a counter variable also to "[variable]".  Hence,  the grammar starts with "<S>->[n] <n> [m] <n>  <T_N>". The <T_i>  is the counter non-terminal of the counter variable [n]  having  <L_2m> counter non-terminal of size 2m which is separated by the new line token <n>.  The <L_i> has only 0 and 1 of length one using the regular expression as  [01]{1}, so we represent the length in {}" </Reason>
+<Grammar> "<S>->[n] <s> [m] <n> <T_n>", "<T_i>-><T_i-1> <n> <L_2m>","<T_1>-><L_2m>", "<L_i>-><L_i-1> <s> [01]{1}", "<L_1>->[01]{1}"  </Grammar>
+<Constraint> "1<=n,m<=100" </Constraint>
+<Specification> "{Specification}" </Specification>
+Generate the <Grammar> and <Constraint> for the given last <Specification> by following the general rules and the examples provided without changing the basic structure from the examples. Output in a json format.
+Json format should be
+{"grammar": {"productions": [Corrected grammar for the Specification], "constraints": [Corrected constraint for the Specification]}}.
