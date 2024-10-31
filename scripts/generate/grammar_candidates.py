@@ -3,13 +3,11 @@ import json
 import logging
 import random
 from pathlib import Path
-from typing import (
-    Any,
-)
+from typing import Any
 
 import jsonlines
-import torch
 import numpy as np
+import torch
 from tqdm import tqdm
 from transformers import GenerationConfig  # type: ignore [import]
 from transformers import RobertaTokenizer  # type: ignore [import]
