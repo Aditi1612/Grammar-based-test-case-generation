@@ -1,21 +1,23 @@
+"""Generate grammar candidates for each dataset in the given dataset file."""
+
 import argparse
 import json
 import logging
-import random
 from pathlib import Path
+import random
 from typing import Any
 
 import jsonlines
 import numpy as np
 import torch
 from tqdm import tqdm
-from transformers import GenerationConfig  # type: ignore [import]
-from transformers import RobertaTokenizer  # type: ignore [import]
-from transformers import T5ForConditionalGeneration  # type: ignore [import]
+from transformers import GenerationConfig  # type: ignore[import]
+from transformers import RobertaTokenizer
+from transformers import T5ForConditionalGeneration
 
-from data_loader import MyDataset
-from model import MyModel
-from tokenizer import CountingContextFreeGrammarTokenizer as CcfgTokenizer
+from data_loader import MyDataset  # type: ignore[import]
+from model import MyModel  # type: ignore[import]
+from tokenizer import CountingContextFreeGrammarTokenizer as CcfgTokenizer  # type: ignore[import]
 
 # Fix random seeds for reproducibility
 SEED = 42
@@ -31,7 +33,7 @@ def main(
     data_path: Path,
     output_path: Path,
     num_beams: int,
-    config: dict[str, Any],
+    config: dict[str, Any],  # pylint: disable=redefined-outer-name
 ) -> None:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -43,9 +45,9 @@ def main(
     config["test"]["generation_config"]["num_return_sequences"] = num_beams
     generation_config = GenerationConfig(**config["test"]["generation_config"])
 
-    logging.info(f"Use device: {device}")
-    logging.info(f"Dataset: {data_path}")
-    logging.info(f"Checkpoint: {checkpoint_path}")
+    logging.info("Use device: %s", device)
+    logging.info("Dataset: %s", data_path)
+    logging.info("Checkpoint: %s", checkpoint_path)
 
     # Create a data loader
     source_tokenizer = RobertaTokenizer.from_pretrained(pretrained_model_name)
@@ -111,7 +113,7 @@ if __name__ == "__main__":
     parser.add_argument("--config", default="./config.json")
     args = parser.parse_args()
 
-    with open(args.config) as fp:
+    with open(args.config, encoding="utf-8") as fp:
         config = json.load(fp)
 
     main(args.model_pth, args.data, args.output, args.num_beams, config)

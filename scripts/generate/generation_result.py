@@ -1,12 +1,14 @@
+"""Generation result"""
+
 import argparse
 from pathlib import Path
 
 import jsonlines
 import timeout_decorator  # type: ignore
-
-from counting_context_free_grammar import Discriminator
+from utils import GenerationResult  # type: ignore
 from utils import GenerationResultPerTestcase
-from utils import GenerationResult
+
+from counting_context_free_grammar import Discriminator  # type: ignore
 
 
 def check_syntactic_validness(
@@ -14,7 +16,7 @@ def check_syntactic_validness(
     grammar: dict[str, list[str]],
 ) -> GenerationResultPerTestcase:
 
-    @timeout_decorator.timeout(10)
+    @timeout_decorator.timeout(10)  # type: ignore
     def _check_syntactic_validness(
         testcase: str,
         grammar: dict[str, list[str]],
@@ -22,12 +24,12 @@ def check_syntactic_validness(
         d = Discriminator()
         productions = grammar["productions"]
         constraints = grammar["constraints"]
-        return d(productions, constraints, testcase)
+        return d(productions, constraints, testcase)  # type: ignore
 
     try:
         parsable = _check_syntactic_validness(testcase, grammar)
         return GenerationResultPerTestcase(parsable=parsable, error=None)
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-except
         return GenerationResultPerTestcase(parsable=False, error=str(e))
 
 

@@ -1,8 +1,11 @@
+"""Download the code_contests dataset from the deepmind/code_contests
+dataset."""
+
 import os
 from pathlib import Path
 
+from datasets import load_dataset  # type: ignore
 import jsonlines
-from datasets import load_dataset
 from tqdm import tqdm
 
 dataset = load_dataset("deepmind/code_contests")

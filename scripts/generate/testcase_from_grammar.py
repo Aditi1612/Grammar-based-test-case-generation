@@ -6,12 +6,13 @@ from pathlib import Path
 import random
 from typing import Any, Optional
 
-import jsonlines  # type: ignore
+import jsonlines
 import timeout_decorator  # type: ignore
+# pylint: disable-next=redefined-builtin
 from timeout_decorator.timeout_decorator import TimeoutError  # type: ignore
-from tqdm import tqdm  # type: ignore
+from tqdm import tqdm
 
-from counting_context_free_grammar import CountingContextFreeGrammar as Ccfg
+from counting_context_free_grammar import CountingContextFreeGrammar as Ccfg  # type: ignore
 
 SEED = 42
 random.seed(SEED)
@@ -27,9 +28,9 @@ def get_testcase(
     throw: Error
     """
 
-    @timeout_decorator.timeout(timeout)
+    @timeout_decorator.timeout(timeout)  # type: ignore
     def _generate(degree: int) -> str:
-        return ccfg.generate(degree=degree)
+        return ccfg.generate(degree=degree)  # type: ignore
 
     if min_degree == -1:
         assert k == 1

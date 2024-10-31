@@ -1,11 +1,12 @@
+"""Validity of the generated test cases."""
+
 import argparse
 from pathlib import Path
 from statistics import mean
-from typing import Iterable, Optional
 
-import jsonlines  # type: ignore
+import jsonlines
 from utils import sanitize  # type: ignore
-from utils import GenerationResult, split_with_level
+from utils import split_with_level
 
 
 def main(generation_path: Path, use_level: bool) -> None:
@@ -23,7 +24,8 @@ def main(generation_path: Path, use_level: bool) -> None:
             continue
 
         well_definednesses.append(1)
-        # Validity is the ratio of the number of parsable test cases to the number of test cases
+        # Validity is the ratio of the number of parsable test cases to the
+        # number of test cases
         validity = mean([e["parsable"] for e in generation_results])
         validities.append(validity)
 

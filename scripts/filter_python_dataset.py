@@ -1,13 +1,12 @@
-import os
-from enum import IntEnum
-from typing import (
-    Any,
-    Union,
-)
-from pathlib import Path
+"""Filter the dataset to only include Python3 solutions."""
 
-from tqdm import tqdm
+from enum import IntEnum
+import os
+from pathlib import Path
+from typing import Any
+
 import jsonlines
+from tqdm import tqdm
 
 
 class LanguageType(IntEnum):
@@ -18,7 +17,7 @@ class LanguageType(IntEnum):
     JAVA = 4
 
 
-def get_source_name(source: int):
+def get_source_name(source: int) -> str:
     return [
         "UNKNOWN_SOURCE",
         "CODECHEF",
@@ -38,11 +37,11 @@ def has_python3_solution(data: dict[str, Any]) -> bool:
 
 
 def trim_solutions(
-    solutions: dict[str, list[Union[str, int]]]
+    solution_object: dict[str, Any],
 ) -> dict[str, list[str]]:
 
-    languages = solutions["language"]
-    solutions = solutions["solution"]
+    languages = solution_object["language"]
+    solutions = solution_object["solution"]
 
     trimmed_solutions = {
         "solution": [
@@ -54,7 +53,7 @@ def trim_solutions(
     return trimmed_solutions
 
 
-def trim(data: dict[str, Any]):
+def trim(data: dict[str, Any]) -> dict[str, Any]:
     keys = [
         "name",
         "description",
@@ -63,7 +62,7 @@ def trim(data: dict[str, Any]):
         "generated_tests",
     ]
 
-    trimmed_data: dict[Any] = {k: data[k] for k in keys}
+    trimmed_data: dict[str, Any] = {k: data[k] for k in keys}
     trimmed_data["source"] = get_source_name(data["source"])
     trimmed_data["solutions"] = trim_solutions(data["solutions"])
     trimmed_data["incorrect_solutions"] = trim_solutions(
@@ -73,7 +72,7 @@ def trim(data: dict[str, Any]):
     return trimmed_data
 
 
-def main():
+def main() -> None:
     raw_dataset_dir = Path("data/raw")
     dataset_dir = Path("data")
 
@@ -94,8 +93,8 @@ def main():
             trimmed_dataset = map(trim, python_dataset)
 
             tqdm_desc = f"Writing {python_dataset_path}"
-            with jsonlines.open(python_dataset_path, "w") as python_dataset:
-                python_dataset.write_all(tqdm(trimmed_dataset, desc=tqdm_desc))
+            with jsonlines.open(python_dataset_path, "w") as writer:
+                writer.write_all(tqdm(trimmed_dataset, desc=tqdm_desc))
 
 
 if __name__ == "__main__":

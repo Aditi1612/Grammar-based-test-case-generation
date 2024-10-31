@@ -1,3 +1,5 @@
+"""Exact match for grammar candidates."""
+
 import argparse
 from typing import Optional
 

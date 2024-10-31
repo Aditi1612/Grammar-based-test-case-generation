@@ -1,3 +1,5 @@
+# pylint: disable=all
+# type: ignore
 import argparse
 import math
 import random

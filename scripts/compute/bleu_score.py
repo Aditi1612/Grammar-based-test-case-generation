@@ -1,13 +1,14 @@
+"""Bleu score computation for grammars."""
+
 import argparse
 import os
 from pathlib import Path
 from statistics import mean
-from typing import Optional, Iterable, Any
 
-import jsonlines  # type: ignore
-from sacrebleu import corpus_bleu as bleu_score  # type: ignore
-from utils import sanitize  # type: ignore
-from utils import normalize_grammar
+import jsonlines
+from sacrebleu import corpus_bleu as bleu_score
+from utils import normalize_grammar  # type: ignore
+from utils import sanitize
 
 
 def string_list_to_corpus(list_of_strings: list[str]) -> list[list[str]]:
@@ -81,9 +82,10 @@ def main(grammar_path: Path) -> None:
     assert count == len(constr_scores)
     assert count == len(total_scores)
 
-    print(f"total production-blue constraints-bleu total-bleu")
+    print("total production-blue constraints-bleu total-bleu")
     print(
-        f"{count} {mean(prod_scores)} {mean(constr_scores)} {mean(total_scores)}"
+        f"{count} {mean(prod_scores)}",
+        f"{mean(constr_scores)} {mean(total_scores)}",
     )
 
 

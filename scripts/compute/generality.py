@@ -1,11 +1,13 @@
-import argparse
-from pathlib import Path
-from typing import Iterable
-from statistics import mean
+"""Generality evaluation script."""
 
-import jsonlines  # type: ignore
-from utils import sanitize  # type: ignore
-from utils import GenerationResult, ParsingResult
+import argparse
+from statistics import mean
+from typing import Iterable
+
+import jsonlines
+from utils import GenerationResult  # type: ignore
+from utils import ParsingResult
+from utils import sanitize
 
 
 def main(

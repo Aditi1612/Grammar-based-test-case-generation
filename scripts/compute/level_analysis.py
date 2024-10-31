@@ -1,9 +1,9 @@
 """Level analysis script."""
 
 import argparse
-import os
 from collections import Counter
 from itertools import tee
+import os
 from pathlib import Path
 
 import jsonlines

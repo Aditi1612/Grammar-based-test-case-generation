@@ -3,11 +3,11 @@ combinations.
 """
 
 import argparse
-from itertools import chain, combinations
+from itertools import combinations
 from pathlib import Path
 
-import jsonlines  # type: ignore
-import numpy as np  # type: ignore
+import jsonlines
+import numpy as np
 from utils import sanitize  # type: ignore
 
 

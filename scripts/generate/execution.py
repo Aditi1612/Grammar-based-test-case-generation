@@ -1,3 +1,5 @@
+"""Execute the testcases on the solutions and write the results to a file."""
+
 import argparse
 from multiprocessing import Pool
 from pathlib import Path
@@ -6,7 +8,7 @@ import tempfile
 from typing import Any, IO, Optional
 
 import jsonlines
-from utils import ExecutionResult  # type: ignore[import-untyped]
+from utils import ExecutionResult  # type: ignore
 from utils import ExecutionResultPerTestcase
 from utils import get_timeout_dict
 from utils import sample_solutions

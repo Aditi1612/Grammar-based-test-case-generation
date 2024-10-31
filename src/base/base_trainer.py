@@ -1,6 +1,6 @@
+from abc import abstractmethod
 import os
 from pathlib import Path
-from abc import abstractmethod
 from typing import Optional
 
 import torch

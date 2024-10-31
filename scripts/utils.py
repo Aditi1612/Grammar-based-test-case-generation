@@ -5,18 +5,16 @@ import os
 import warnings
 
 warnings.filterwarnings("ignore", module="urllib3")
+from pathlib import Path
 # pylint: disable=wrong-import-position
 import random
-from pathlib import Path
 from typing import Any, Iterable, Optional, TypedDict, TypeVar
 
 import jsonlines
 from transformers import RobertaTokenizer  # type: ignore
 
 from data_loader import MyDataset  # type: ignore
-from tokenizer import (  # type: ignore
-    CountingContextFreeGrammarTokenizer as CcfgTokenizer,
-)
+from tokenizer import CountingContextFreeGrammarTokenizer as CcfgTokenizer  # type: ignore
 
 # pylint: enable=wrong-import-position
 

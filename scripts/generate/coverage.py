@@ -1,3 +1,5 @@
+"""Coverage analysis for the given testcases."""
+
 import argparse
 import json
 from multiprocessing import Pool
@@ -8,7 +10,7 @@ import tempfile
 from typing import Any, IO
 
 import jsonlines
-from utils import CoverageEntry  # type: ignore[import-untyped]
+from utils import CoverageEntry  # type: ignore
 from utils import CoverageResult
 from utils import CoverageResultPerTestcase
 from utils import get_timeout_dict
@@ -137,7 +139,7 @@ def f(
     return coverage_result
 
 
-def main(testcases_path: Path, output_path: Path):
+def main(testcases_path: Path, output_path: Path) -> None:
     """Run the coverage analysis for the given testcases."""
     testcases = jsonlines.open(testcases_path, "r")
     timeout_dict = get_timeout_dict(testcases_path.stem)

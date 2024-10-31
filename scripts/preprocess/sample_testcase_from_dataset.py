@@ -1,6 +1,6 @@
+import os
 from pathlib import Path
 import sys
-import os
 
 import jsonlines
 from tqdm import tqdm

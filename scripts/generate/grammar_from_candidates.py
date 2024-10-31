@@ -1,18 +1,18 @@
-import argparse
-import logging
-from itertools import product
-from pathlib import Path
-from typing import (
-    Any,
-)
+"""Generate grammar from candidates"""
 
-import jsonlines  # type: ignore
+import argparse
+from itertools import product
+import logging
+from pathlib import Path
+from typing import Any
+
+import jsonlines
 from timeout_decorator import timeout  # type: ignore
-from timeout_decorator import TimeoutError
-from tqdm import tqdm  # type: ignore
+from timeout_decorator import TimeoutError  # pylint: disable=redefined-builtin
+from tqdm import tqdm
+from utils import normalize_grammar  # type: ignore
 
 from counting_context_free_grammar import CountingContextFreeGrammar as Ccfg  # type: ignore
-from utils import normalize_grammar  # type: ignore
 
 
 @timeout(10)  # type: ignore
@@ -40,7 +40,7 @@ def update(data: dict[str, Any]) -> dict[str, Any]:
         except TimeoutError:
             logging.warning("TimeoutError")
             continue
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             continue
     data["grammar"] = grammar
     del data["grammar_candidates"]

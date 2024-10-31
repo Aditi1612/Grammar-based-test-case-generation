@@ -1,14 +1,14 @@
+"""Exact match evaluation for grammars."""
+
 import argparse
 import os
 from pathlib import Path
 from statistics import mean
-from typing import Optional, Iterable
 
-import jsonlines  # type: ignore
-from utils import sanitize  # type: ignore
+import jsonlines
+from utils import Grammar  # type: ignore
 from utils import normalize_grammar
-from utils import GrammarData
-from utils import Grammar
+from utils import sanitize
 
 
 def compare_grammar(g1: Grammar, g2: Grammar) -> tuple[bool, bool]:

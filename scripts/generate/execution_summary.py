@@ -1,9 +1,11 @@
+"""Execution summary."""
+
 import argparse
 from pathlib import Path
-from typing import Iterable, Optional
+from typing import cast, Iterable, Optional
 
 import jsonlines
-from utils import ExecutionResult  # type: ignore[import-untyped]
+from utils import ExecutionResult  # type: ignore
 from utils import ExecutionResultPerTestcase
 from utils import ExecutionSummary
 from utils import ExecutionSummaryPerTestcase
@@ -16,7 +18,7 @@ def get_answer(execution: ExecutionResultPerTestcase) -> Optional[str]:
         return None
 
     answer, _ = get_mode(correct_results)
-    return answer
+    return cast(Optional[str], answer)
 
 
 def summarize_execution_per_testcase(
