@@ -8,7 +8,7 @@ MODEL:=saved/checkpoint.pth
 
 default: all
 
-data/%.jsonl: raw-data/%.jsonl
+$(CURDIR)/data/%.jsonl: raw-data/%.jsonl
 	mkdir -p $(dir $@)
 	ln -fs $(abspath $<) $@
 
@@ -21,7 +21,6 @@ prepare-dataset:
 SUFFIXES_GRAMMAR = \
 	ccfg-t5/beam-1/test.jsonl \
 	ccfg-t5/beam-10/test.jsonl \
-	ccfg-t5/beam-100/test.jsonl \
 	gemini/1-shot/test.jsonl \
 	gemini/5-shot/test.jsonl \
 	gpt/1-shot/test.jsonl \

@@ -10,10 +10,10 @@ $(DATA)/grammar-candidate/ccfg-t5/beam-%/test.jsonl: \
 		--output $@ \
 		--num-beams $*
 
-$(DATA)/grammar/%.jsonl: $(DATA)/grammar-candidate/%.jsonl
+$(DATA)/grammar/%.jsonl: | $(DATA)/grammar-candidate/%.jsonl
 	mkdir -p $(dir $@)
 	$(PYTHON) scripts/generate/grammar_from_candidates.py \
-		--data $< \
+		--data $| \
 		--output $@
 
 grammar: $(GRAMMAR)
