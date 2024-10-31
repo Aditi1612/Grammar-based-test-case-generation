@@ -1,8 +1,0 @@
-I will give you the specification of a problem.
-Generate 10 valid test cases for the following specification:
-{{specification}}
-Each test case should be in one line using "\n".
-Generate 10 valid test cases for the above specification. Print all the testcase
-in combined in the format below. Strictly, just print the test cases; do not print
-anything else other than the test cases in a JSON format.
-
