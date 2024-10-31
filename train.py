@@ -64,7 +64,7 @@ def main(config: dict[str, Any]) -> None:
     source_tokenizer = RobertaTokenizer.from_pretrained(config["pretrained"])
     target_tokenizer = CcfgTokenizer(source_tokenizer)
 
-    train_data_path = data_dir / config["train_data"]
+    train_data_path = config["train_data"]
     valid_data_path = data_dir / config["unlabeled_valid_data"]
     unlabeled_train_data_path = data_dir / config["unlabeled_train_data"]
 
