@@ -237,7 +237,7 @@ def main(config: dict[str, Any]) -> None:
         optimizer,
         device,
         train_data_loader,
-        validate,
+        None,
         unlabeled_data_list,
         pseudo_labeler=pseudo_labeler,
         **trainer_args,

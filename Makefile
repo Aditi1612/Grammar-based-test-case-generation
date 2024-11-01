@@ -15,8 +15,7 @@ $(CURDIR)/data/%.jsonl: raw-data/%.jsonl
 prepare-dataset:
 	python scripts/download_dataset.py \
 	&& python scripts/filter_python_dataset.py \
-	&& python scripts/generate_python3_solutions.py \
-	&& python scripts/filter_labeled_test_dataset.py
+	&& python scripts/generate_python3_solutions.py
 
 SUFFIXES_GRAMMAR = \
 	ccfg-t5/beam-1/test.jsonl \

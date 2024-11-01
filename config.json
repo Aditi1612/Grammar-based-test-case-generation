@@ -5,9 +5,9 @@
   "incorrect_solution_prefix": "data/solutions/solutions",
   "train_data": "raw-data/grammar/ground-truth/train.jsonl",
   "test_data": "raw-data/grammar/ground-truth/test.jsonl",
-  "unlabeled_train_data": "unlabeled/code_contests_train_python_filtered.jsonl",
-  "unlabeled_valid_data": "unlabeled/code_contests_valid_python.jsonl",
-  "unlabeled_test_data": "unlabeled/code_contests_train_python_with_test_label.jsonl",
+  "unlabeled_train_data": "/dev/null",
+  "unlabeled_valid_data": "/dev/null",
+  "unlabeled_test_data": "/dev/null",
   "data_loader": {
     "args": {
       "batch_size": 8,
@@ -23,7 +23,7 @@
   },
   "trainer": {
     "epochs": 100,
-    "save_dir": "saved/without_pl/",
+    "save_dir": "saved/ccfg-t5/",
     "save_period": 10,
     "valid_period": 5,
     "pseudo_label_period": -1
