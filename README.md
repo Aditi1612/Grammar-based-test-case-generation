@@ -48,7 +48,7 @@ $ make prepare-dataset
 ### Training the CcfgT5 model
 
 The following command will train the CcfgT5 model. The trained model will be
-saved in `models/ccfg-t5/`.
+saved in `saved/ccfg-t5/`.
 
 ```bash
 $ python train.py
@@ -58,7 +58,7 @@ Run the following command to generate grammars using the trained model.
 
 ```bash
 $ mv ./raw-data/grammar/ccfg-t5 ./ccfg-t5.backup
-$ make $(pwd)/data/grammar/ccfg-t5/beam-{1,10}/test.jsonl
+$ make $(pwd)/data/grammar/ccfg-t5/beam-{1,10}/test.jsonl MODEL=<checkpoint>
 ```
 
 ### Reproducing the evaluation results
