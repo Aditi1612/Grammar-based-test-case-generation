@@ -35,10 +35,6 @@ $ pip install -r requirements.txt
 
 ### Data download
 
-This section is optional. If you don't want to train the model, you can skip
-this section and start from the section ["Reproducing the evaluation
-results"](#reproducing-the-evaluation-results).
-
 The following command will create `data/{raw,solutions,unlabeled}`.
 
 ```bash
@@ -46,6 +42,10 @@ $ make prepare-dataset
 ```
 
 ### Training the CcfgT5 model
+
+This section is optional. If you don't want to train the model, you can skip
+this section and start from the section ["Reproducing the evaluation
+results"](#reproducing-the-evaluation-results).
 
 The following command will train the CcfgT5 model. The trained model will be
 saved in `saved/ccfg-t5/`.
@@ -57,7 +57,7 @@ $ python train.py
 Run the following command to generate grammars using the trained model.
 
 ```bash
-$ mv ./raw-data/grammar/ccfg-t5 ./ccfg-t5.backup
+$ rm -r ./raw-data/grammar/ccfg-t5 # or move the folder to ./ccfg-t5.backup
 $ make $(pwd)/data/grammar/ccfg-t5/beam-{1,10}/test.jsonl MODEL=<checkpoint>
 ```
 
